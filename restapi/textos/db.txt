@@ -1,0 +1,48 @@
+JDBC (Java Database Conectivity)
+    - É a API padrão do Java para acesso a dados;
+        - É a biblioteca que vem no Java para acesso a algum banco de dados;
+    - Possui 'Drivers' para realizar a conversão do código nativo java para a linguagem de banco de dados em questão;
+
+Diagrama de Classes (UML)
+    - Utilizado para mostrar um exemplo de instância de objeto do modelo de classes que se quiser;
+    - É a representação da estrutura e relação de classes;
+    - Em um cenário de diagrama de classes depara-se com muitos objetos, no entanto, nem todos serão úteis para esse sistema. Aí entra a ABSTRAÇÃO;
+        ABSTRAÇÃO: - Um conceito que refere-se ao processo de filtragem de objetos que se façam necessariamente essenciais para o ;
+
+====================================================
+
+DDL: Data Definition Language (Linguagem de Definição de Dados);
+    => Como os dados devem residir no banco de dados;
+        - CREATE;
+        - ALTER;
+        - DROP;
+        - TRUNCATE;
+        - COMMENT;
+        - RENAME;
+   
+DML: Data Manipulation Date (Linguagem de Manipulação de Dados);
+    => Usado para fazer as operações básicas de CRUD;
+        - SELECT;
+        - INSERT;
+        - UPDATE;
+        - DELETE;
+        - CALL;
+        - MERGE;
+        - LOCK TABLE;
+        - EXPLAIN PLAN;
+    
+DCL: Data Control Language (Linguagem de Controle de Dados);
+    => Responsável por direitos, permissões e demais controles de dados;
+        - GRANT;
+        - REVOKE;
+
+DTL ou TCL: Data Transation Language/ Transation Control Language (Linguagem de Transação de Dados/ controle de transação);
+    => Transações de dados;
+        - COMMIT;
+        - ROLLBACK;
+        - SAVEPOINT;
+        - SET TRANSACTION;
+
+DQL: Data Query Language (Linguagem de Busca de Dados);
+    => Somente comando de consulta;
+        - SELECT;

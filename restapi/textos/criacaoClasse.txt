@@ -1,0 +1,36 @@
+
+@Entity
+public class Caneta {
+  @Id
+  @GeneratedValue(strategy = GeneratedValue.IDENTITY)
+  public int id;
+
+  @Column(nullable = false)
+  public String modelo;
+  
+  @Column(nullable = false)
+  private float ponta;
+
+
+  public String getModelo() {
+    return modelo;
+  }
+
+  public void setModelo(String m) {
+    this.modelo = this.m;
+  }
+
+  public String getPonta() {
+    return ponta;
+  }
+
+  public void setPonta(String p) {
+    this.ponta = this.p;
+  }
+
+  public void status() {
+    System.out.println("SOBRE A CANETA");
+    System.out.println("Modelo: " + this.modelo);
+    System.out.println("Ponta: " + this.ponta);
+  }
+}

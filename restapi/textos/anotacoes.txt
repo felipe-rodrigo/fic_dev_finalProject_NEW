@@ -1,0 +1,72 @@
+SPRING
+  - Não reconhece as classes definidas fora do pacote que está a classe que possui o método principal (main) -> @SpringBootApplication;
+
+  > ANOTAÇÕES SPRING 
+    - @Controller: é responsável por receber a requisição HTTP e gerar uma resposta HTTP;
+    - @Controller possui anotações que contêm a mesma funcionalidade;
+      Ex: - @Repository;
+          - @Service;
+          - @Component;
+    - @RestController = @Controller + @ResponseBody;
+    - @Autowired: faz com que o Spring crie o objeto, injete no atributo criado e  o gerencie 
+
+    Formato de um método JAVA:
+      => 
+
+MAPEAMENTO DE DADOS
+  - Para que seja feito o mapeamento de dados da entidade com o banco de dados, é utilizado o Spring Data (Framework de mapeamento objeto Relacional);
+
+DATABASE (Arquivo)
+  - Local de armazenamento de todas as classes que estão relacionadas com o gerenciamento de dados do REST;
+
+ARQUIVO POM
+
+  - fica na raiz do projeto 
+  - possui as configurações gerais do projeto e demais dependencias definidas;
+    
+PASSO A PASSO
+
+  1- Criar projeto Java
+    1.1 - F1 para as opções de ferramenta - Create a Java Project;
+    1.2 - Selecionar o tipo de projeto Java - Spring Boot;
+    1.3 - Selecionar o gerenciador de arquivos Java - Maven;
+    1.4 - Selecionar a versão do Spring Boot;
+    1.5 - Selecionar a linguagem desejada - Java;
+    1.6 - Inserir o grupo de classes (pacotes) do projeto - com.exemple;
+    1.7 - Inserir o nome do Artefato (arquivo JAR ou AAR - executável) - demo;
+    1.8 - Especificar a versão do Java;
+    1.9 - Selecionar as dependencias (bancos de dados e etc);
+    1.10 - Selecionar o local onde o projeto será salvo;
+  
+  2- Criar a entidade desejada
+    2.1 - Criar aquivo .java na pasta que está o método main (principal);
+    2.2 - Criar a classe da entidade;
+    2.3 - Criar o atributos e métodos da entidade;
+      2.3.1
+         - Para se realizar os geters e seters, basta clicar no botão direito e selecionar as seguintes opções:
+            - Origin Source; 
+            - Generate geters and seters;
+            * Nesse estágio, os métodos da entidade serão gerados automaticamente;
+    2.4 - Com o Framework Spring Data JAP instalado, a anotação '@Entity' define a classe criada como sendo uma entidade e reconhecida pelo SGDB, tendo também uma tabela gerada nesse último;
+    2.5 - Definir o atributo 'Id' como o identificador da classe usando a anotação @Id;
+    2.6 - Paralelo ao tópico anterior, para que o valor do '@Id' seja gerado automaticamente pelo SGDB, utiliza-se a anotação @GeneratedValue;
+      2.6.1 - Como parâmetros, pensando em dinamizar o processo utilizando-se de estratégias que o framework disponibiliza, passa-se o atributo 'strategy' como parâmetro e, dele, usa-se a classe 'GenerationType' que tem por atributo 'AUTO', 'IDENTITY', 'SEQUENCE', 'TABLE';
+      2.6.2 - Como gerador de valor do Id usado será o 'IDENTITY';
+  
+  3- Definir as operações do SGDB dessa entidade criada
+    3.1 - Utilizar o padrão 'repositorie' 
+      3.1.1 - Permite encapsular a lógica para trabalhar com os dados da entidade em um único lugar;
+  
+  4- Servidor REST
+    4.1 - Necessita de um objeto que contenha as operações HTTP e, por intermédio dele, fazer o gerenciamento da entidade. Pode-se comparar ao Gerenciamento de Estado do PINIA (Store);
+    4.2 - No arquivo 'RepositorieContato.java', na linha 'public interface RepositorieContato extends JpaRepositorie<Contato,Long>', terão dois dados dentro dos sinais de maior e menor. Um indica a entidade que disponibilizará os dados para a biblioteca do Jpa consumir, sendo que o primeiro define o tipo da entidade e o segundo define o tipo do identificador; => Tipo da entidade: 'Contato' & Tipo do identificador: 'Long';
+      4.2.1 - Em tempo de execução, o Spring injeta a biblioteca 'JpaRepositorie<,>' necessita saber o que vai consumir, logo, por isso inserir as informações dentro dos sinais de maior e menor;
+      4.2.2 - é como se fosse a pasta App.vue de um projeto Vue (é a principal pagina de aplicação);
+      4.2.3 - Ela possui o método main (principal) responsável por fazer a inicialização do projeto;
+    4.2 - O spring boot já trás o servidor embutido (container web), sem a necessidade gastar tempo em 'montar um servidor do zero'
+
+
+
+
+
+

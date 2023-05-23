@@ -1,0 +1,7 @@
+Comandos IntelliJ
+
+  - Alt + Enter => Lista os problemas, sugestões e soluções dispostos no campo de trabalho;
+
+  - F2 = quasar de trabalho
+
+  - Ctrl + B => 
