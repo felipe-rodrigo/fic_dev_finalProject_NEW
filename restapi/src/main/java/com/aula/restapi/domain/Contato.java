@@ -1,6 +1,6 @@
 // CLASSE DE DEFINIÇÃO DA ENTIDADE
 
-package com.aula.restapi.entidade;
+package com.aula.restapi.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

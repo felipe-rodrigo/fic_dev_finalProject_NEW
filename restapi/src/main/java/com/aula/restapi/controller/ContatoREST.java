@@ -1,6 +1,6 @@
 // CLASSE RESPONSÁVEL POR GERENCIAR AS REQUISIÇÕES
 
-package com.aula.restapi.entidade;
+package com.aula.restapi.controller;
 
 import java.util.List;
 
@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aula.restapi.database.RepositorieContato;
+import com.aula.restapi.domain.Contato;
+import com.aula.restapi.repository.ContatoRepository;
 
 
 @RestController
 @RequestMapping("/contato")
 public class ContatoREST {
   @Autowired
-  private RepositorieContato repositorioInjetado;
+  private ContatoRepository repositorioInjetado;
 
   @GetMapping
   public List<Contato> listar() {
