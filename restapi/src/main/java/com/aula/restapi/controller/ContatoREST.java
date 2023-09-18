@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aula.restapi.domain.Contato;
-import com.aula.restapi.repository.ContatoRepository;
+import com.aula.restapi.database.repository.ContatoRepository;
+import com.aula.restapi.entity.Contato;
 
 
 @RestController

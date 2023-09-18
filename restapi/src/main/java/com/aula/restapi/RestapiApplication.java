@@ -16,7 +16,7 @@ public class RestapiApplication {
         Connection umaConexao = null;
         try {
             Class.forName("org.postgresql.Driver");
-            umaConexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contatos", "postgres", "123456");
+            umaConexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/exames", "postgres", "123456");
             ResultSet resultClient = umaConexao.createStatement().executeQuery("SELECT * FROM CLIENT");
             while (resultClient.next()) {
                 System.out.println("Nome: " + resultClient.getString("nome"));

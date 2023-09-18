@@ -1,6 +1,6 @@
 // CLASSE DE DEFINIÇÃO DA ENTIDADE
 
-package com.aula.restapi.domain;
+package com.aula.restapi.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,40 +55,3 @@ public class Contato {
 
 }
 
-
-
-// @Entity
-// public class Caneta {
-//   @Id
-//   @GeneratedValue(strategy = GenerationType.IDENTITY)
-//   public int id;
-
-//   @Column(nullable = false)
-//   public String modelo;
-  
-//   @Column(nullable = false)
-//   private float ponta;
-
-
-//   public String getModelo() {
-//     return modelo;
-//   }
-
-//   public void setModelo(String m) {
-//     this.modelo = m;
-//   }
-
-//   public String getPonta() {
-//     return this.ponta;
-//   }
-
-//   public void setPonta(String p) {
-//     this.ponta = this.p;
-//   }
-
-//   public void status() {
-//     System.out.println("SOBRE A CANETA");
-//     System.out.println("Modelo: " + this.modelo);
-//     System.out.println("Ponta: " + this.ponta);
-//   }
-// }
