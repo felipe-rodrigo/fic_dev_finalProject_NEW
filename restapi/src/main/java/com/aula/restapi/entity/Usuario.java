@@ -9,17 +9,17 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Medico {
+public class Usuario {
   
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id_medico")
-  private Long idMedico;
+  @Column(name = "id_usuario")
+  private Long idUsuario;
 
   @Column(nullable = false)
   private String nome;
 
   @Column(nullable = false)
-  private String crm;
-}
+  private String senha;
 
+}

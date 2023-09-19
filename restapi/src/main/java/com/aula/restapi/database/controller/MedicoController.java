@@ -1,4 +1,4 @@
-package com.aula.restapi.controller;
+package com.aula.restapi.database.controller;
 
 // CLASSE RESPONSÁVEL POR GERENCIAR AS REQUISIÇÕES
 
@@ -21,7 +21,7 @@ import com.aula.restapi.entity.Medico;
 
 
 @RestController
-@RequestMapping("/medico")
+@RequestMapping("/medicos")
 public class MedicoController {
   @Autowired
   private MedicoRepository repositorioMedico;
@@ -32,13 +32,13 @@ public class MedicoController {
   // };
 
   // MÉTODO PARA LISTAGEM GERAL
-  @GetMapping("/medicos")
+  @GetMapping("/listar")
   public List<Medico> listarMedicos() {
     return repositorioMedico.findAll();
   }
 
   // MÉTODO PARA LISTAGEM ESPECÍFICA
-  @GetMapping("/medicos/{id}")
+  @GetMapping("/listar/{id}")
   public ResponseEntity<Medico> listarMedicoPorId(@PathVariable Long id) {
 
     Optional<Medico> medico = repositorioMedico.findById(id);
@@ -50,19 +50,22 @@ public class MedicoController {
     }
   }
 
-  @PostMapping
+  // MÉTODO DE SALVAR
+  @PostMapping("/adicionar")
   public void salvarMedico(@RequestBody Medico objMedico) {
     repositorioMedico.save(objMedico);
   };
 
-  @PutMapping
+  // MÉTODO DE EDITAR
+  @PutMapping("/editar/{id}")
   public void alterarMedico(@RequestBody Medico objMedico) {
     if (objMedico.getIdMedico() > 0) {
       repositorioMedico.save(objMedico);
     }
   };
 
-  @DeleteMapping 
+  // MÉTODO DE DELETAR
+  @DeleteMapping("/deletar/{id}")
   public void deletarMedico(@RequestBody Medico objMedico) {
     repositorioMedico.delete(objMedico);
   }
