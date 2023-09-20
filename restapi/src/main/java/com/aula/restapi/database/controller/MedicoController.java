@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,16 +59,39 @@ public class MedicoController {
 
   // MÉTODO DE EDITAR
   @PutMapping("/editar/{id}")
-  public void alterarMedico(@RequestBody Medico objMedico) {
+  public void editarMedico(@RequestBody Medico objMedico) {
     if (objMedico.getIdMedico() > 0) {
       repositorioMedico.save(objMedico);
     }
   };
 
   // MÉTODO DE DELETAR
+  // @DeleteMapping("/deletar/{id}")
+  // public void deletarMedico(@RequestBody Medico objMedico) {
+  //   repositorioMedico.delete(objMedico);
+  // }
+
   @DeleteMapping("/deletar/{id}")
-  public void deletarMedico(@RequestBody Medico objMedico) {
-    repositorioMedico.delete(objMedico);
-  }
+public ResponseEntity<String> deletarMedico(@PathVariable Long id) {
+    try {
+        // Verificar se o médico com o ID especificado existe
+        Optional<Medico> medicoOpt = repositorioMedico.findById(id);
+        if (!medicoOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        // Verificar permissões de autorização (opcional)
+
+        // Excluir o médico
+        repositorioMedico.deleteById(id);
+        
+        return ResponseEntity.noContent().build(); // Retorna "204 No Content" em caso de sucesso.
+    } catch (Exception e) {
+        // Tratar exceções, por exemplo, problemas no banco de dados.
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Erro ao excluir o médico: " + e.getMessage());
+    }
+}
+
 }
 
