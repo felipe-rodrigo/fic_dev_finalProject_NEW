@@ -16,18 +16,18 @@ public class Paciente {
   @Column(name = "id_paciente")
   private Long idPaciente;
 
-  @Column(nullable = false, length = 80)
+  @Column(name = "nome", nullable = false, length = 80)
   private String nome;
 
-  @Column(nullable = false)
+  @Column(name = "data_nascimento", nullable = false)
   private Date dataNascimento;
 
-  @Column(nullable = false, length = 80)
+  @Column(name = "endereco", nullable = false, length = 80)
   private String endereco;
 
-  @Column(nullable = false, length = 20)
+  @Column(name = "telefone", nullable = false, length = 20)
   private String telefone;
 
-  @Column(nullable = false, length = 15)
+  @Column(name = "cartao_sus", nullable = false, length = 15)
   private String cartaoSus;
 }

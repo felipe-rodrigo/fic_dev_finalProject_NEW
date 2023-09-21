@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aula.restapi.database.repository.ExameRepository;
 import com.aula.restapi.entity.Exame;
-import com.aula.restapi.entity.Medico;
 
 
 @RestController

@@ -16,10 +16,10 @@ public class Medico {
   @Column(name = "id_medico")
   private Long idMedico;
 
-  @Column(nullable = false)
+  @Column(name = "nome", nullable = false, length = 80)
   private String nome;
 
-  @Column(nullable = false)
+  @Column(name = "crm", nullable = false, length = 15)
   private String crm;
 }
 

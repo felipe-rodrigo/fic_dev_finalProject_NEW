@@ -31,7 +31,7 @@ public class Exame {
     @Column(name = "data_hora_exame", nullable = false)
     private Date dataHoraExame;
 
-    @Column(name = "obs", nullable = false)
+    @Column(name = "observacao", nullable = false)
     private String observacao;
 
     @Column(name = "resultado", nullable = false)
