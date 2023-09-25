@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aula.restapi.database.DTO.MedicoDTO;
 import com.aula.restapi.database.repository.MedicoRepository;
 import com.aula.restapi.entity.Medico;
 
@@ -52,10 +53,29 @@ public class MedicoController {
   }
 
   // MÉTODO DE SALVAR
-  @PostMapping("/adicionar")
-  public void salvarMedico(@RequestBody Medico objMedico) {
-    repositorioMedico.save(objMedico);
-  };
+  // @PostMapping("/adicionar")
+  // public void salvarMedico(@RequestBody Medico objMedico) {
+  //   repositorioMedico.save(objMedico);
+  // };
+
+    @PostMapping("/adicionar")
+    public ResponseEntity<String> adicionarMedico(@RequestBody MedicoDTO medicoDTO) {
+        try {
+            // Criar um objeto Medico a partir dos dados do DTO
+            Medico novoMedico = new Medico();
+            novoMedico.setIdMedico(medicoDTO.getIdMedico());
+            novoMedico.setNome(medicoDTO.getNome());
+            novoMedico.setCrm(medicoDTO.getCrm());
+
+            // Salvar o novo médico no banco de dados
+            Medico medicoSalvo = repositorioMedico.save(novoMedico);
+
+            return ResponseEntity.ok("Médico adicionado com sucesso. ID do médico: " + medicoSalvo.getIdMedico());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao adicionar o médico: " + e.getMessage());
+        }
+    }
 
   // MÉTODO DE EDITAR
   @PutMapping("/editar/{id}")

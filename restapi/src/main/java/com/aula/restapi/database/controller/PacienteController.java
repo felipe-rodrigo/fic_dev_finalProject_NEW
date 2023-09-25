@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aula.restapi.database.DTO.PacienteDTO;
 import com.aula.restapi.database.repository.PacienteRepository;
 import com.aula.restapi.entity.Paciente;
 
@@ -46,10 +48,32 @@ public class PacienteController {
   }
 
   // MÉTODO DE SALVAR
-  @PostMapping("/adicionar")
-  public void salvarPaciente(@RequestBody Paciente objPaciente) {
-    repositorioPaciente.save(objPaciente);
-  };
+  // @PostMapping("/adicionar")
+  // public void salvarPaciente(@RequestBody Paciente objPaciente) {
+  //   repositorioPaciente.save(objPaciente);
+  // };
+
+     @PostMapping("/adicionar")
+    public ResponseEntity<String> adicionarPaciente(@RequestBody PacienteDTO pacienteDTO) {
+        try {
+            // Criar um objeto Paciente a partir dos dados do DTO
+            Paciente novoPaciente = new Paciente();
+            novoPaciente.setIdPaciente(pacienteDTO.getIdPaciente());
+            novoPaciente.setNome(pacienteDTO.getNome());
+            novoPaciente.setDataNascimento(pacienteDTO.getDataNascimento());
+            novoPaciente.setEndereco(pacienteDTO.getEndereco());
+            novoPaciente.setTelefone(pacienteDTO.getTelefone());
+            novoPaciente.setCartaoSus(pacienteDTO.getCartaoSus());
+
+            // Salvar o novo paciente no banco de dados
+            Paciente pacienteSalvo = repositorioPaciente.save(novoPaciente);
+
+            return ResponseEntity.ok("Paciente adicionado com sucesso. ID do paciente: " + pacienteSalvo.getIdPaciente());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao adicionar o paciente: " + e.getMessage());
+        }
+    }
 
   // MÉTODO DE EDITAR
   @PutMapping("/editar/{id}")

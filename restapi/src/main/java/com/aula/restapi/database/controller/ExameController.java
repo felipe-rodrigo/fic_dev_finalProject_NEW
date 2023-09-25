@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,18 +18,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aula.restapi.database.DTO.ExameDTO;
 import com.aula.restapi.database.repository.ExameRepository;
 import com.aula.restapi.entity.Exame;
+import com.aula.restapi.entity.Medico;
+import com.aula.restapi.entity.Paciente;
 
 
 @RestController
 @RequestMapping("/exames")
 public class ExameController {
   
-   @Autowired
+  @Autowired
   private ExameRepository repositorioExame;
 
   // MÉTODO PARA LISTAGEM GERAL
@@ -51,36 +52,36 @@ public class ExameController {
         return ResponseEntity.notFound().build();
     }
   }
+  
+ @PostMapping("/adicionar")
+    public ResponseEntity<String> adicionarExame(@RequestBody ExameDTO exameDTO) {
+        try {
+            // Criar um objeto Exame a partir dos dados do DTO
+            Exame novoExame = new Exame();
+            novoExame.setIdExame(exameDTO.getIdExame());
 
-  // MÉTODO DE SALVAR
-  // @PostMapping("/adicionar")
-  // public void salvarExame(@RequestBody Exame objExame) {
-  //   repositorioExame.save(objExame);
-  // };
+            // Configurar o objeto Medico e Paciente com base nos IDs fornecidos no DTO
+            Medico medico = new Medico();
+            medico.setIdMedico(exameDTO.getIdMedico());
+            novoExame.setMedico(medico);
 
-  @PostMapping("/adicionar")
-@ResponseStatus(HttpStatus.CREATED)
-public ResponseEntity<String> salvarExame(@Validated @RequestBody Exame objExame) {
-    try {
-        // Verifica se os dados do exame são válidos com base nas anotações de validação.
+            Paciente paciente = new Paciente();
+            paciente.setIdPaciente(exameDTO.getIdPaciente());
+            novoExame.setPaciente(paciente);
 
-        // Salva o exame
-        Exame novoExame = repositorioExame.save(objExame);
+            novoExame.setDataHoraExame(exameDTO.getDataHoraExame());
+            novoExame.setObservacao(exameDTO.getObservacao());
+            novoExame.setResultado(exameDTO.getResultado());
 
-        // Retorna o ID do exame criado no cabeçalho de resposta
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/adicionar/" + novoExame.getIdExame());
+            // Salvar o novo exame no banco de dados
+            Exame exameSalvo = repositorioExame.save(novoExame);
 
-        return ResponseEntity.created(new URI("/adicionar/" + novoExame.getIdExame()))
-                .headers(headers)
-                .body("Exame criado com sucesso. ID: " + novoExame.getIdExame());
-    } catch (Exception e) {
-        // Trata exceções, por exemplo, problemas no banco de dados.
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Erro ao salvar o exame: " + e.getMessage());
+            return ResponseEntity.ok("Exame adicionado com sucesso. ID do exame: " + exameSalvo.getIdExame());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao adicionar o exame: " + e.getMessage());
+        }
     }
-}
-
 
   // MÉTODO DE EDITAR
   // @PutMapping("/editar/{id}")

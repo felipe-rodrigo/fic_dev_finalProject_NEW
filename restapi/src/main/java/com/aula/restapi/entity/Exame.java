@@ -36,4 +36,16 @@ public class Exame {
 
     @Column(name = "resultado", nullable = false)
     private String resultado;
+
+    public Exame(Long idExame, Medico medico, Paciente paciente, Date dataHoraExame, String observacao, String resultado) {
+        this.idExame = idExame;
+        this.medico = medico;
+        this.paciente = paciente;
+        this.dataHoraExame = dataHoraExame;
+        this.observacao = observacao;
+        this.resultado = resultado;  
+    }
+
+    public Exame(){
+    }
 }
