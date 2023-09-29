@@ -9,7 +9,7 @@ public class ExameDTO {
     private Long idMedico;
     private Long idPaciente;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") // Formato da data esperado
+    @JsonFormat(pattern = "yyyy-MM-dd") // Formato da data esperado
     private Date dataHoraExame;
     private String observacao;
     private String resultado;
