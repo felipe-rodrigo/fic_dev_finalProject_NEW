@@ -1,6 +1,6 @@
 package com.aula.restapi.database.controller;
 
-import java.net.URI;
+// import java.net.URI;
 
 // CLASSE RESPONSÁVEL POR GERENCIAR AS REQUISIÇÕES
 
