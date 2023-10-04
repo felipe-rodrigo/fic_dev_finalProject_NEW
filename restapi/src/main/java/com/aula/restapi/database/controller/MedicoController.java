@@ -78,10 +78,23 @@ public class MedicoController {
     }
 
   // MÉTODO DE EDITAR
-  @PutMapping("/editar/{id}")
-  public void editarMedico(@RequestBody Medico objMedico) {
-    if (objMedico.getIdMedico() > 0) {
-      repositorioMedico.save(objMedico);
+  @PutMapping("/editar")
+  public ResponseEntity<Medico> editarMedico(@RequestBody Medico objMedico) {
+    long idMedico = objMedico.getIdMedico();
+    Optional<Medico> medicoOptional = repositorioMedico.findById(idMedico);
+
+    if (medicoOptional.isPresent()) {
+        Medico medicoExistente = medicoOptional.get();
+        
+        medicoExistente.setNome(objMedico.getNome());
+        medicoExistente.setCrm(objMedico.getCrm());
+        
+        repositorioMedico.save(medicoExistente);
+
+        return ResponseEntity.ok(medicoExistente);
+    } else {
+        // Retorna um status adequado, por exemplo, 404 Not Found
+        return ResponseEntity.notFound().build();
     }
   };
 
