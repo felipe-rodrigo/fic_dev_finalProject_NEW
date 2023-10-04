@@ -8,7 +8,7 @@ public class PacienteDTO {
     private Long idPaciente;
     private String nome;
 
-    @JsonFormat(pattern = "yyyy-MM-dd") // Formato da data esperado
+    @JsonFormat(pattern = "dd-MM-yyyy") // Formato da data esperado
     private Date dataNascimento;
     private String endereco;
     private String telefone;
