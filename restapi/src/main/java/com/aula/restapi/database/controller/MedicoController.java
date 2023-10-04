@@ -79,10 +79,23 @@ public class MedicoController {
 
   // MÉTODO DE EDITAR
   @PutMapping("/editar/{id}")
-  public void editarMedico(@RequestBody Medico objMedico) {
-    if (objMedico.getIdMedico() > 0) {
-      repositorioMedico.save(objMedico);
+  public void editarMedico(@PathVariable Long id, @RequestBody Medico medicoDTO) {
+    Optional<Medico> resultado = repositorioMedico.findById(id);
+    //System.out.println(medicoDTO.getNome());
+    if (resultado.isPresent()) {
+      Medico medico = resultado.get();
+      //System.out.println(medico.getNome());
+      if (medicoDTO.getNome() != null) {
+      medico.setNome(medicoDTO.getNome());
+      }
+      if (medicoDTO.getCrm() != null) {
+        medico.setCrm(medicoDTO.getCrm());
+      }
+      repositorioMedico.save(medico);
     }
+    // if (medicoDTO.getIdMedico() > 0) {
+    //   repositorioMedico.save(medicoDTO);
+    // }
   };
 
   // MÉTODO DE DELETAR
