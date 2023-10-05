@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aula.restapi.database.DTO.ExameDTO;
 import com.aula.restapi.database.repository.ExameRepository;
+import com.aula.restapi.database.repository.MedicoRepository;
+import com.aula.restapi.database.repository.PacienteRepository;
 import com.aula.restapi.entity.Exame;
 import com.aula.restapi.entity.Medico;
 import com.aula.restapi.entity.Paciente;
@@ -33,6 +35,12 @@ public class ExameController {
   
   @Autowired
   private ExameRepository repositorioExame;
+
+  @Autowired
+  private MedicoRepository medicoRepository;
+
+  @Autowired
+  private PacienteRepository pacienteRepository;
 
   // MÉTODO PARA LISTAGEM GERAL
   @GetMapping("/listar")
@@ -54,34 +62,34 @@ public class ExameController {
   }
   
  @PostMapping("/adicionar")
-    public ResponseEntity<String> adicionarExame(@RequestBody ExameDTO exameDTO) {
-        try {
-            // Criar um objeto Exame a partir dos dados do DTO
-            Exame novoExame = new Exame();
-            novoExame.setIdExame(exameDTO.getIdExame());
+public ResponseEntity<String> adicionarExame(@RequestBody ExameDTO exameDTO) {
+    try {
+        // Criar um objeto Exame a partir dos dados do DTO
+        Exame novoExame = new Exame();
+        novoExame.setIdExame(exameDTO.getIdExame());
 
-            // Configurar o objeto Medico e Paciente com base nos IDs fornecidos no DTO
-            Medico medico = new Medico();
-            medico.setIdMedico(exameDTO.getIdMedico());
-            novoExame.setMedico(medico);
+        // Configurar o objeto Medico e Paciente com base nos IDs fornecidos no DTO
+        Medico medico = new Medico();
+        medico.setIdMedico(exameDTO.getIdMedico());
+        novoExame.setMedico(medico);
 
-            Paciente paciente = new Paciente();
-            paciente.setIdPaciente(exameDTO.getIdPaciente());
-            novoExame.setPaciente(paciente);
+        Paciente paciente = new Paciente();
+        paciente.setIdPaciente(exameDTO.getIdPaciente());
+        novoExame.setPaciente(paciente);
 
-            novoExame.setDataHoraExame(exameDTO.getDataHoraExame());
-            novoExame.setObservacao(exameDTO.getObservacao());
-            novoExame.setResultado(exameDTO.getResultado());
+        novoExame.setDataHoraExame(exameDTO.getDataHoraExame());
+        novoExame.setResultado(exameDTO.getObservacao());
+        novoExame.setResultado(exameDTO.getResultado());
 
-            // Salvar o novo exame no banco de dados
-            Exame exameSalvo = repositorioExame.save(novoExame);
+        // Salvar o novo exame no banco de dados
+        Exame exameSalvo = repositorioExame.save(novoExame);
 
-            return ResponseEntity.ok("Exame adicionado com sucesso. ID do exame: " + exameSalvo.getIdExame());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erro ao adicionar o exame: " + e.getMessage());
-        }
+        return ResponseEntity.ok("Exame adicionado com sucesso. ID do exame: " + exameSalvo.getIdExame());
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Erro ao adicionar o exame: " + e.getMessage());
     }
+}
 
   // MÉTODO DE EDITAR
   // @PutMapping("/editar/{id}")
@@ -91,26 +99,40 @@ public class ExameController {
   //   }
   // };
 
-  @PutMapping("/editar/{id}")
-public ResponseEntity<String> alterarExame(@PathVariable Long id, @Validated @RequestBody Exame objExame) {
+@PutMapping("/editar")
+public ResponseEntity<String> alterarExame(@Validated @RequestBody ExameDTO objExame) {
     try {
-        // Verifica se o ID do exame é maior que zero
-        if (id <= 0) {
+        if (objExame.getIdExame() <= 0) {
             return ResponseEntity.badRequest().body("ID de exame inválido.");
         }
 
-        // Verifica se o exame com o ID especificado existe
-        Optional<Exame> exameOpt = repositorioExame.findById(id);
+        Optional<Exame> exameOpt = repositorioExame.findById(objExame.getIdExame());
         if (!exameOpt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        
-        // Atualiza os campos do exame
-        Exame exameExistente = exameOpt.get();
-        // Atualize os campos necessários de 'exameExistente' com os dados de 'objExame'
 
-        // Salva as alterações
-        Exame exameAtualizado = repositorioExame.save(exameExistente);
+        Optional<Medico> medicoOpt = medicoRepository.findById(objExame.getIdMedico());
+        if (!medicoOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Paciente> pacienteOpt = pacienteRepository.findById(objExame.getIdPaciente());
+        if (!pacienteOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        Exame exame = exameOpt.get();
+        
+        Medico medico = medicoOpt.get();
+        Paciente paciente = pacienteOpt.get();
+
+        exame.setMedico(medico);
+        exame.setPaciente(paciente);
+        exame.setDataHoraExame(objExame.getDataHoraExame());
+        exame.setObservacao(objExame.getObservacao());
+        exame.setResultado(objExame.getResultado());
+
+        Exame exameAtualizado = repositorioExame.save(exame);
 
         return ResponseEntity.ok("Exame atualizado com sucesso. ID: " + exameAtualizado.getIdExame());
     } catch (Exception e) {

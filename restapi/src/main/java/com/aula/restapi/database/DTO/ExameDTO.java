@@ -1,7 +1,5 @@
 package com.aula.restapi.database.DTO;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 public class ExameDTO {
@@ -9,7 +7,6 @@ public class ExameDTO {
     private Long idMedico;
     private Long idPaciente;
 
-    @JsonFormat(pattern = "yyyy-MM-dd") // Formato da data esperado
     private Date dataHoraExame;
     private String observacao;
     private String resultado;

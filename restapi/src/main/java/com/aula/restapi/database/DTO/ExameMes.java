@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class ExemaMes {
+public class ExameMes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
