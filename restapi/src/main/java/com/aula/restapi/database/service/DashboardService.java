@@ -31,9 +31,11 @@ public class DashboardService {
              "   WHEN 11 THEN 'Novembro' " +
              "   WHEN 12 THEN 'Dezembro' " +
              "END AS nome_mes, " +
+             "EXTRACT(MONTH FROM e.dataHoraExame) AS mes, " +
              "COUNT(*) as total " +
              "FROM Exame e " +
-             "GROUP BY nome_mes";
+             "GROUP BY nome_mes, mes " +
+             "ORDER BY mes ASC";
 
                      
     
