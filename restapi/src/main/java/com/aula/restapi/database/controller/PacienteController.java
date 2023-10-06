@@ -75,18 +75,42 @@ public class PacienteController {
         }
     }
 
-  // MÉTODO DE EDITAR
-  @PutMapping("/editar/{id}")
-  public void alterarPaciente(@RequestBody Paciente objPaciente) {
-    if (objPaciente.getIdPaciente() > 0) {
-      repositorioPaciente.save(objPaciente);
-    }
-  };
+    @PutMapping("/editar")
+    public ResponseEntity<Paciente> editarPaciente(@RequestBody PacienteDTO objPaciente) {
+      long idPaciente = objPaciente.getIdPaciente();
+      Optional<Paciente> pacienteObj = repositorioPaciente.findById(idPaciente);
+  
+      if (pacienteObj.isPresent()) {
+        Paciente paciente = pacienteObj.get();
 
-  // MÉTODO DE DELETAR
-  @DeleteMapping("/deletar/{id}")
-  public void deletarPaciente(@RequestBody Paciente objPaciente) {
-    repositorioPaciente.delete(objPaciente);
-  }
+        paciente.setNome(objPaciente.getNome());
+        paciente.setDataNascimento(objPaciente.getDataNascimento());
+        paciente.setEndereco(objPaciente.getEndereco());
+        paciente.setTelefone(objPaciente.getTelefone());
+        paciente.setCartaoSus(objPaciente.getCartaoSus());
+
+        repositorioPaciente.save(paciente);
+        return ResponseEntity.ok(paciente);
+      } else {
+          return ResponseEntity.notFound().build();
+      }
+    };
+
+      @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<String> deletarPaciente(@PathVariable Long id) {
+      try {
+          Optional<Paciente> opt = repositorioPaciente.findById(id);
+          if (!opt.isPresent()) {
+              return ResponseEntity.notFound().build();
+          }
+          
+          repositorioPaciente.deleteById(id);
+          
+          return ResponseEntity.noContent().build(); 
+      } catch (Exception e) {
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                  .body("Erro ao excluir o médico: " + e.getMessage());
+      }
+    }
 
 }

@@ -78,7 +78,7 @@ public ResponseEntity<String> adicionarExame(@RequestBody ExameDTO exameDTO) {
         novoExame.setPaciente(paciente);
 
         novoExame.setDataHoraExame(exameDTO.getDataHoraExame());
-        novoExame.setResultado(exameDTO.getObservacao());
+        novoExame.setObservacao(exameDTO.getObservacao());
         novoExame.setResultado(exameDTO.getResultado());
 
         // Salvar o novo exame no banco de dados
